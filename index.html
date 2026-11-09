@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interval Trainer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Interval Trainer</h1>
+    <p class="tagline">Find the interval from the green root note.</p>
+  </header>
+
+  <main>
+    <section class="stage">
+      <div id="prompt" class="prompt">Choose your intervals and press <strong>Start</strong>.</div>
+      <div id="feedback" class="feedback" aria-live="polite">&nbsp;</div>
+
+      <div class="keyboard-wrap">
+        <div id="keyboard" class="keyboard" aria-label="Piano keyboard, two octaves"></div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-start" class="primary">Start <kbd>Enter</kbd></button>
+        <button id="btn-replay" disabled>Replay root <kbd>Space</kbd></button>
+        <button id="btn-hint" disabled>Hint <kbd>H</kbd></button>
+        <button id="btn-skip" disabled>Reveal &amp; skip <kbd>S</kbd></button>
+      </div>
+
+      <div class="scoreboard">
+        <div class="stat"><span id="s-correct">0</span><label>First-try</label></div>
+        <div class="stat"><span id="s-asked">0</span><label>Questions</label></div>
+        <div class="stat"><span id="s-acc">–</span><label>Accuracy</label></div>
+        <div class="stat"><span id="s-streak">0</span><label>Streak</label></div>
+        <div class="stat"><span id="s-best">0</span><label>Best streak</label></div>
+        <div class="stat"><span id="s-time">–</span><label>Avg time</label></div>
+      </div>
+    </section>
+
+    <section class="settings">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Intervals</h2>
+          <div class="presets">
+            <button data-preset="all">All</button>
+            <button data-preset="none">None</button>
+            <button data-preset="consonant">Consonant</button>
+            <button data-preset="dissonant">Dissonant</button>
+          </div>
+        </div>
+        <div id="interval-list" class="interval-list"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Options</h2>
+        <div class="options">
+          <label>Questions per root note
+            <input id="opt-reps" type="number" min="1" max="50" value="3">
+          </label>
+          <label>Direction
+            <select id="opt-dir">
+              <option value="up">Ascending ↑</option>
+              <option value="down">Descending ↓</option>
+              <option value="both">Both ↕</option>
+            </select>
+          </label>
+          <label>Root note
+            <select id="opt-root"><option value="random">Random</option></select>
+          </label>
+          <label>Session length
+            <select id="opt-length">
+              <option value="0">Endless</option>
+              <option value="10">10 questions</option>
+              <option value="20" selected>20 questions</option>
+              <option value="50">50 questions</option>
+            </select>
+          </label>
+          <label>Key labels
+            <select id="opt-labels">
+              <option value="c">C only</option>
+              <option value="all">All notes</option>
+              <option value="none">None</option>
+            </select>
+          </label>
+          <label>Spelling
+            <select id="opt-spelling">
+              <option value="sharp">Sharps (C♯)</option>
+              <option value="flat">Flats (D♭)</option>
+            </select>
+          </label>
+          <label class="check"><input id="opt-anyoct" type="checkbox"> Accept the note in any octave</label>
+          <label class="check"><input id="opt-sound" type="checkbox" checked> Sound</label>
+          <label class="check"><input id="opt-playback" type="checkbox" checked> Play the interval when correct</label>
+          <label class="check"><input id="opt-earmode" type="checkbox"> Ear mode (hide interval name – listen only)</label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Per-interval results</h2>
+        <table id="breakdown" class="breakdown">
+          <thead><tr><th>Interval</th><th>Asked</th><th>First-try</th><th></th></tr></thead>
+          <tbody><tr><td colspan="4" class="muted">No questions yet.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="summary" class="summary hidden" role="dialog" aria-modal="true">
+    <div class="summary-card">
+      <h2>Session complete</h2>
+      <div id="summary-body"></div>
+      <button id="btn-again" class="primary">Play again</button>
+      <button id="btn-close">Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
