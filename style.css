@@ -163,6 +163,14 @@ kbd {
 .interval-list label span { white-space: nowrap; }
 .interval-list .abbr { color: var(--gold); font-weight: 700; width: 2.2em; }
 .interval-list .semis { color: var(--muted); font-size: 0.75rem; margin-left: auto; }
+.interval-list .iv-text { display: flex; flex-direction: column; line-height: 1.2; }
+.interval-list .iv-sub { font-size: 0.72rem; color: var(--muted); }
+.interval-list label.fundamental {
+  background: rgba(46, 204, 113, 0.12);
+  box-shadow: inset 3px 0 0 var(--green);
+}
+.interval-list label.fundamental:hover { background: rgba(46, 204, 113, 0.2); }
+.interval-list label.fundamental .iv-sub { color: var(--green); font-weight: 600; }
 
 input[type="checkbox"] { accent-color: var(--accent); width: 1rem; height: 1rem; }
 

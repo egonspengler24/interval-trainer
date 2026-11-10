@@ -7,18 +7,18 @@
   const BLACK = new Set([1, 3, 6, 8, 10]);
 
   const INTERVALS = [
-    { semi: 1,  abbr: 'm2', name: 'Minor 2nd' },
-    { semi: 2,  abbr: 'M2', name: 'Major 2nd' },
-    { semi: 3,  abbr: 'm3', name: 'Minor 3rd' },
-    { semi: 4,  abbr: 'M3', name: 'Major 3rd' },
-    { semi: 5,  abbr: 'P4', name: 'Perfect 4th' },
-    { semi: 6,  abbr: 'TT', name: 'Tritone' },
-    { semi: 7,  abbr: 'P5', name: 'Perfect 5th' },
-    { semi: 8,  abbr: 'm6', name: 'Minor 6th' },
-    { semi: 9,  abbr: 'M6', name: 'Major 6th' },
-    { semi: 10, abbr: 'm7', name: 'Minor 7th' },
-    { semi: 11, abbr: 'M7', name: 'Major 7th' },
-    { semi: 12, abbr: 'P8', name: 'Octave' },
+    { semi: 1,  abbr: 'm2', name: 'Minor 2nd',   fundamental: true, build: 'half-step' },
+    { semi: 2,  abbr: 'M2', name: 'Major 2nd',   fundamental: true, build: 'whole-step' },
+    { semi: 3,  abbr: 'm3', name: 'Minor 3rd',   build: 'whole-step + half-step' },
+    { semi: 4,  abbr: 'M3', name: 'Major 3rd',   build: 'whole-step + whole-step' },
+    { semi: 5,  abbr: 'P4', name: 'Perfect 4th', build: '5th − whole-step' },
+    { semi: 6,  abbr: 'TT', name: 'Tritone',     build: '5th − half-step' },
+    { semi: 7,  abbr: 'P5', name: 'Perfect 5th', fundamental: true },
+    { semi: 8,  abbr: 'm6', name: 'Minor 6th',   build: '5th + half-step' },
+    { semi: 9,  abbr: 'M6', name: 'Major 6th',   build: '5th + whole-step' },
+    { semi: 10, abbr: 'm7', name: 'Minor 7th',   build: '8ve − whole-step' },
+    { semi: 11, abbr: 'M7', name: 'Major 7th',   build: '8ve − half-step' },
+    { semi: 12, abbr: 'P8', name: 'Octave',      fundamental: true },
   ];
   const BY_SEMI = Object.fromEntries(INTERVALS.map(i => [i.semi, i]));
 
@@ -167,9 +167,17 @@
     const list = $('#interval-list');
     INTERVALS.forEach(iv => {
       const label = document.createElement('label');
+      if (iv.fundamental) label.className = 'fundamental';
+      const sub = iv.fundamental
+        ? `Fundamental${iv.build ? ` · ${iv.build}` : ''}`
+        : `= ${iv.build}`;
+      label.title = iv.fundamental
+        ? `${iv.name} is a fundamental interval`
+        : `${iv.name} = ${iv.build}`;
       label.innerHTML =
         `<input type="checkbox" class="iv-check" value="${iv.semi}"${iv.semi === 7 ? ' checked' : ''}>` +
-        `<span class="abbr">${iv.abbr}</span><span>${iv.name}</span>` +
+        `<span class="abbr">${iv.abbr}</span>` +
+        `<span class="iv-text"><span class="iv-name">${iv.name}</span><span class="iv-sub">${sub}</span></span>` +
         `<span class="semis">${iv.semi} st</span>`;
       list.appendChild(label);
     });
